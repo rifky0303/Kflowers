@@ -29,6 +29,7 @@
             padding: 20px;
         }
 
+        /* Custom Cursor */
         #cursor-flower {
             position: fixed;
             width: 40px;
@@ -78,6 +79,7 @@
             font-size: 0.8rem;
         }
 
+        /* Headline Section */
         .headline-section {
             text-align: center;
             margin: 40px -15px;
@@ -90,6 +92,7 @@
             position: relative;
         }
 
+        /* Grid Produk (Kibas 2D) */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -151,24 +154,53 @@
             right: -10px;
             transform: rotate(5deg);
             font-weight: 600;
+            transition: 0.2s;
         }
 
-        /* Kontak Section */
-        .social-section {
-            border: 3px solid var(--ink);
-            background: #fff;
+        .price-tag:hover {
+            transform: scale(1.1) rotate(0deg);
+            background: var(--cute-pink);
+            color: white;
+        }
+
+        /* Modal Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--paper);
+            max-width: 450px;
+            width: 90%;
             padding: 30px;
-            margin-top: 60px;
+            border: 4px solid var(--ink);
+            box-shadow: 15px 15px 0 var(--cute-pink);
             position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .social-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+        @keyframes modalPop {
+            from { transform: scale(0.7) rotate(-5deg); opacity: 0; }
+            to { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--ink);
+        }
+
+        /* Iklan Baris Buttons */
         .social-btn {
             display: flex;
             align-items: center;
@@ -181,14 +213,16 @@
             border: 2px solid var(--ink);
             box-shadow: 4px 4px 0 var(--ink);
             transition: 0.2s;
+            margin-bottom: 12px;
         }
 
         .social-btn i {
             font-size: 1.2rem;
-            width: 30px;
+            width: 35px;
             margin-right: 10px;
-            border-right: 1px solid #333;
-            padding-right: 10px;
+            border-right: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
         }
 
         .social-btn:hover {
@@ -197,21 +231,49 @@
             background: var(--soft-pink);
         }
 
+        .social-section {
+            border: 3px solid var(--ink);
+            background: #fff;
+            padding: 30px;
+            margin-top: 60px;
+            position: relative;
+        }
+
         .petal {
             position: fixed;
             pointer-events: none;
             z-index: 100;
             animation: fall linear infinite;
         }
-
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <div id="cursor-flower">🌸</div>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div style="border: 2px solid var(--ink); padding: 20px; text-align: center;">
+                <h2 style="font-family: 'Playfair Display'; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;">Special Bulletin</h2>
+                <p id="modalItemName" style="font-weight: bold; font-size: 1.3rem; color: var(--cute-pink); margin-bottom: 5px;"></p>
+                <p style="font-size: 0.8rem; font-style: italic; margin-bottom: 25px;">"Pesan sekarang melalui jalur komunikasi kami:"</p>
+                
+                <div style="text-align: left;">
+                    <a href="https://wa.me/6282231235341" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                    </a>
+                    <a href="https://www.tiktok.com/@leonard2pac" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-tiktok"></i> TikTok DM
+                    </a>
+                    <a href="https://www.instagram.com/leonardrapiki/" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-instagram"></i> Instagram DM
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="newspaper-container">
         <header>
@@ -226,41 +288,41 @@
         <div class="headline-section">
             <p style="text-align:center; font-weight:bold; letter-spacing:3px;">— SPECIAL EDITION —</p>
             <h2 style="text-align:center; font-family:'Playfair Display'; text-transform:uppercase; font-size:2rem;">Single Stem Collection</h2>
-            <p style="text-align:center; font-size:0.7rem;">HARGA PER TANGKAI • BUKAN BUKET • HAND-KNITTED</p>
+            <p style="text-align:center; font-size:0.7rem;">HARGA PER TANGKAI • KLIK UNTUK MEMESAN</p>
         </div>
 
         <div class="grid">
-            <div class="card">
+            <div class="card" onclick="openModal('Rosé Bliss 🎀')">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/74/58/dc/7458dce8dbb934ed0969df4f74d484fe.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Rosé Bliss 🎀</h3>
                 <p class="card-desc">Satu tangkai mawar merah elegan hasil rajutan tangan.</p>
                 <div class="price-tag">34k</div>
             </div>
-            <div class="card">
+            <div class="card" onclick="openModal('Sweet Lily ☁️')">
                 <div class="image-box"><img src="https://i.pinimg.com/1200x/ba/82/e8/ba82e8730f14db0aea193528da55977d.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Sweet Lily ☁️</h3>
                 <p class="card-desc">Keanggunan lily putih per tangkai yang sangat kalem.</p>
                 <div class="price-tag">16k</div>
             </div>
-            <div class="card">
+            <div class="card" onclick="openModal('Tulip Clean 🌷')">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/fc/3d/fa/fc3dfa0506512896c7b727c1005f2fa8.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Tulip Clean 🌷</h3>
                 <p class="card-desc">Satu tangkai tulip minimalis untuk pelengkap kado manis.</p>
                 <div class="price-tag">16k</div>
             </div>
-            <div class="card">
+            <div class="card" onclick="openModal('Jumbo Rosé 💖')">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/a6/4e/7a/a64e7a1a2f6cce8486838b792d939c87.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Jumbo Rosé 💖</h3>
                 <p class="card-desc">Mawar rajut ukuran jumbo untuk momen yang lebih berani.</p>
                 <div class="price-tag">70k</div>
             </div>
-            <div class="card">
+            <div class="card" onclick="openModal('Lily Pot ☁️')">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/80/58/8e/80588ec04ac3b6f0e4039bce451546a1.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Lily Pot ☁️</h3>
                 <p class="card-desc">Bunga Lily mungil lengkap dengan pot rajut dekoratif.</p>
                 <div class="price-tag">Soon</div>
             </div>
-            <div class="card">
+            <div class="card" onclick="openModal('Sunflower Pot 🌻')">
                 <div class="image-box"><img src="https://i.pinimg.com/1200x/92/67/f5/9267f586f76b4d3e930b9eab5238d94e.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Sunflower Pot 🌻</h3>
                 <p class="card-desc">Bunga matahari ceria dalam pot rajutan. Segera hadir!</p>
@@ -270,45 +332,49 @@
 
         <section class="social-section">
             <div style="border: 1px solid var(--ink); padding: 20px;">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; text-transform: uppercase; border-bottom: 2px solid var(--ink); display: inline-block;">
-                    Classified Ads: Contact Editor
-                </h2>
-                <p style="font-size: 0.8rem; margin: 15px 0; font-style: italic;">
-                    "Tertarik memesan? Hubungi redaksi kami melalui jalur di bawah ini."
-                </p>
-                
-                <div class="social-links">
-                    <a href="https://www.instagram.com/leonardrapiki/" target="_blank" class="social-btn">
-                        <i class="fa-brands fa-instagram"></i> @leonardrapiki
-                    </a>
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; text-transform: uppercase; border-bottom: 2px solid var(--ink); display: inline-block;">Classified Ads: Contact</h2>
+                <div class="social-links" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 20px;">
                     <a href="https://www.tiktok.com/@leonard2pac" target="_blank" class="social-btn">
                         <i class="fa-brands fa-tiktok"></i> @leonard2pac
                     </a>
+                    <a href="https://www.instagram.com/leonardrapiki/" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-instagram"></i> @leonardrapiki
+                    </a>
                     <a href="https://wa.me/6282231235341" target="_blank" class="social-btn">
-                        <i class="fa-brands fa-whatsapp"></i> +62 822-3123-5341
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp Me
                     </a>
                 </div>
             </div>
-            <div style="position: absolute; top: -15px; right: 20px; background: #ffdae0; border: 2px double #ff8fa3; color: #ff8fa3; padding: 10px; transform: rotate(12deg); font-weight: bold; font-family: 'Courier Prime'; pointer-events: none; z-index: 5;">
-                ORDER NOW!
-            </div>
+            <div style="position: absolute; top: -15px; right: 20px; background: #ffdae0; border: 2px double #ff8fa3; color: #ff8fa3; padding: 10px; transform: rotate(12deg); font-weight: bold; pointer-events: none;">ORDER NOW!</div>
         </section>
 
         <footer style="margin-top: 50px; text-align: center; border-top: 4px double var(--ink); padding-top: 20px;">
-            <p style="font-weight: bold; letter-spacing: 3px; font-size: 0.8rem;">KFLOWERS GAZETTE &bull; CANGKUANG &bull; 2026</p>
-            <p style="font-size: 0.6rem; margin-top: 5px;">ALL FLOWERS ARE HAND-KNITTED PER STEM</p>
+            <p style="font-weight: bold; letter-spacing: 3px; font-size: 0.8rem;">KFLOWERS GAZETTE &bull; 2026</p>
         </footer>
     </div>
 
     <script>
-        // Custom Cursor
+        // Modal Logic
+        const modal = document.getElementById('orderModal');
+        const modalItemName = document.getElementById('modalItemName');
+        const closeModal = document.getElementById('closeModal');
+
+        function openModal(name) {
+            modalItemName.innerText = name;
+            modal.style.display = 'flex';
+        }
+
+        closeModal.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; }
+
+        // Cursor
         const cursor = document.getElementById('cursor-flower');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Efek Kelopak Jatuh
+        // Petals
         function createPetal() {
             const petal = document.createElement('div');
             petal.innerHTML = ['🌸','🌷','✨','💖'][Math.floor(Math.random()*4)];
