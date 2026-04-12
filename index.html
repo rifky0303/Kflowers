@@ -1,277 +1,321 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kflowers Gazette | Pinkish Newspaper 🌸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@900&family=Special+Elite&display=swap" rel="stylesheet">
+    <title>Kflowers Ultra Gemoy 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,900;1,900&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --paper-bg: #fff5f6; /* Pink kertas koran pucat */
-            --ink-black: #4a4a4a;
-            --pink-accent: #ffb6c1;
-            --deep-pink: #ff8fa3;
-            --tape-color: rgba(255, 182, 193, 0.4);
+            --paper: #fffcf5;
+            --ink: #333;
+            --soft-pink: #ffdae0;
+            --cute-pink: #ff8fa3;
+            --candy-blue: #bde0fe;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: #ffeef0;
-            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            background-image: 
+                radial-gradient(#ffb6c1 0.5px, transparent 0.5px),
+                radial-gradient(#ffb6c1 0.5px, #ffeef0 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
             font-family: 'Courier Prime', monospace;
-            color: var(--ink-black);
+            overflow-x: hidden;
             padding: 20px;
+            /* Halaman diam, tidak ada rotasi 3d di body */
         }
 
-        /* Container Koran dengan Border Pink */
+        /* Custom Cursor */
+        #cursor-flower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 30px;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        @media (min-width: 1024px) { #cursor-flower { display: block; } }
+
+        /* Container Koran (STATIS/DIAM) */
         .newspaper-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: var(--paper-bg);
-            padding: 40px 20px;
-            box-shadow: 8px 8px 0px var(--pink-accent); /* Shadow kotak DIY */
-            border: 2px solid var(--ink-black);
+            max-width: 1100px;
+            margin: 40px auto;
+            background: var(--paper);
+            padding: 50px 30px;
             position: relative;
+            box-shadow: 15px 15px 0px var(--ink);
+            border: 3px solid var(--ink);
+            /* Tidak ada transform di sini agar halaman tidak miring */
         }
 
-        /* Header Koran */
-        header {
-            text-align: center;
-            border-bottom: 4px double var(--ink-black);
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-        }
-
+        /* Header Bergoyang Lucu */
         .gazette-title {
             font-family: 'Playfair Display', serif;
-            font-size: 3.8rem;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            text-align: center;
             text-transform: uppercase;
-            letter-spacing: -2px;
-            line-height: 0.9;
-            color: var(--deep-pink);
-            text-shadow: 2px 2px 0px var(--pink-accent);
+            color: var(--cute-pink);
+            animation: wobbly 3s ease-in-out infinite;
+            display: block;
+            filter: drop-shadow(4px 4px 0px var(--ink));
+        }
+
+        @keyframes wobbly {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg) scale(1.02); }
         }
 
         .sub-header {
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid var(--ink-black);
-            margin-top: 10px;
-            padding-top: 5px;
-            font-size: 0.8rem;
+            border-top: 3px solid var(--ink);
+            border-bottom: 3px solid var(--ink);
+            padding: 10px 0;
+            margin: 20px 0 50px;
             font-weight: bold;
-            text-transform: uppercase;
-            color: var(--ink-black);
+            font-size: 0.8rem;
         }
 
-        /* Headline Section */
-        .headline {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .headline h2 {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.8rem;
-            background: var(--pink-accent);
-            color: white;
-            display: inline-block;
-            padding: 5px 20px;
-            transform: rotate(-1deg);
-            border: 1px solid var(--ink-black);
-        }
-
-        /* Grid Produk */
+        /* Product Cards (TILT TETAP AKTIF) */
         .grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
         }
 
         .card {
-            border: 1px solid var(--ink-black);
-            padding: 15px;
             background: white;
+            padding: 20px;
             position: relative;
-            transition: all 0.3s ease;
-        }
-
-        /* Isolasi Pink (Tape) */
-        .card::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%) rotate(2deg);
-            width: 90px;
-            height: 30px;
-            background: var(--tape-color);
-            border: 1px dashed var(--deep-pink);
-            z-index: 10;
+            border: 3px solid var(--ink);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
         }
 
         .card:hover {
-            transform: scale(1.03) rotate(-1deg);
-            box-shadow: 5px 5px 0px var(--pink-accent);
+            box-shadow: 10px 10px 0px var(--cute-pink);
         }
 
-        .image-container {
+        .image-box {
             width: 100%;
-            height: 250px;
+            height: 320px;
             overflow: hidden;
-            border: 1px solid var(--ink-black);
-            filter: saturate(0.8); /* Agak kalem warnanya */
+            border: 2px solid var(--ink);
         }
 
         .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .card h3 {
-            font-family: 'Special Elite', cursive;
-            margin: 15px 0 5px;
-            font-size: 1.2rem;
-            color: var(--deep-pink);
+        .card:hover .card-img { transform: scale(1.1); }
+
+        .price-tag {
+            font-family: 'Fredoka', sans-serif;
+            background: #ffecb3;
+            color: var(--ink);
+            padding: 5px 15px;
+            border: 2px solid var(--ink);
+            position: absolute;
+            bottom: 20px;
+            right: -10px;
+            transform: rotate(5deg);
+            font-weight: 600;
         }
 
-        .card p {
-            font-weight: bold;
-            display: inline-block;
-            background: #fff0f3;
-            padding: 2px 10px;
-            border: 1px solid var(--ink-black);
-            margin-top: 5px;
-        }
-
-        /* Social Section */
+        /* --- ANIMASI SOSIAL MEDIA (JELLY MODE) --- */
         .social-section {
-            margin-top: 60px;
+            margin-top: 80px;
             text-align: center;
-            border-top: 2px solid var(--ink-black);
-            padding-top: 30px;
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,182,193,0.1) 10px, rgba(255,182,193,0.1) 20px);
+            padding: 40px;
+            background: #fff;
+            border: 3px dashed var(--cute-pink);
+            border-radius: 20px;
         }
 
-        .social-title {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--deep-pink);
-        }
-
-        .social-icons {
+        .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
+            margin-top: 30px;
         }
 
         .social-btn {
-            padding: 10px 20px;
-            border: 2px solid var(--ink-black);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 35px;
             text-decoration: none;
-            color: var(--ink-black);
+            color: var(--ink);
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
             background: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            box-shadow: 4px 4px 0px var(--pink-accent);
-            transition: 0.2s;
+            border: 3px solid var(--ink);
+            border-radius: 50px;
+            box-shadow: 0 8px 0 var(--ink);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* Efek Jelly saat di-hover */
         .social-btn:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px var(--deep-pink);
-            background: var(--pink-accent);
-            color: white;
+            transform: translateY(-5px) scale(1.05);
+            background: var(--soft-pink);
+            box-shadow: 0 12px 0 var(--cute-pink);
         }
 
-        @media (max-width: 600px) {
-            .grid { grid-template-columns: 1fr; }
-            .gazette-title { font-size: 2.2rem; }
+        .social-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--ink);
+        }
+
+        .social-btn span {
+            display: inline-block;
+            transition: transform 0.4s ease;
+        }
+
+        .social-btn:hover span {
+            transform: rotate(360deg);
+        }
+
+        /* Floating Decorations */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
         }
 
         footer {
+            margin-top: 50px;
             text-align: center;
-            margin-top: 40px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
             font-weight: bold;
-            color: var(--deep-pink);
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
+    <div id="cursor-flower">🌸</div>
+
     <div class="newspaper-container">
         <header>
             <h1 class="gazette-title">Kflowers</h1>
             <div class="sub-header">
-                <span>The Pink Edition — 2026</span>
-                <span>Cangkuang News</span>
-                <span>Est. Love & Wire</span>
+                <span>VOL. 99 — 2026</span>
+                <span>CANGKUANG DISTRICT</span>
+                <span>♡ 100% HANDMADE ♡</span>
             </div>
         </header>
 
-        <div class="headline">
-            <h2>Special Edition: Pinky Blooms!</h2>
-            <p style="margin-top:10px; font-weight: bold;">"The cutest wire flowers in town," says everyone.</p>
-        </div>
-
         <div class="grid">
             <div class="card">
-                <div class="image-container">
-                    <img src="https://i.pinimg.com/736x/74/58/dc/7458dce8dbb934ed0969df4f74d484fe.jpg" alt="Rosé Bliss" class="card-img">
+                <div class="image-box">
+                    <img src="https://i.pinimg.com/736x/74/58/dc/7458dce8dbb934ed0969df4f74d484fe.jpg" class="card-img">
                 </div>
-                <h3>Medium Rosé 🎀</h3>
-                <p>34k</p>
+                <h3 style="margin-top:20px; font-family: 'Fredoka';">Rosé Bliss 🎀</h3>
+                <div class="price-tag">34k</div>
             </div>
 
             <div class="card">
-                <div class="image-container">
-                    <img src="https://i.pinimg.com/1200x/ba/82/e8/ba82e8730f14db0aea193528da55977d.jpg" alt="Lily" class="card-img">
+                <div class="image-box">
+                    <img src="https://i.pinimg.com/1200x/ba/82/e8/ba82e8730f14db0aea193528da55977d.jpg" class="card-img">
                 </div>
-                <h3>Sweet Lily ☁️</h3>
-                <p>16k</p>
+                <h3 style="margin-top:20px; font-family: 'Fredoka';">Sweet Lily ☁️</h3>
+                <div class="price-tag">16k</div>
             </div>
 
             <div class="card">
-                <div class="image-container">
-                    <img src="https://i.pinimg.com/736x/fc/3d/fa/fc3dfa0506512896c7b727c1005f2fa8.jpg" alt="Tulip" class="card-img">
+                <div class="image-box">
+                    <img src="https://i.pinimg.com/736x/fc/3d/fa/fc3dfa0506512896c7b727c1005f2fa8.jpg" class="card-img">
                 </div>
-                <h3>Tulip Clean 🌷</h3>
-                <p>16k</p>
+                <h3 style="margin-top:20px; font-family: 'Fredoka';">Tulip Clean 🌷</h3>
+                <div class="price-tag">16k</div>
             </div>
 
             <div class="card">
-                <div class="image-container">
-                    <img src="https://i.pinimg.com/736x/a6/4e/7a/a64e7a1a2f6cce8486838b792d939c87.jpg" alt="Jumbo" class="card-img">
+                <div class="image-box">
+                    <img src="https://i.pinimg.com/736x/a6/4e/7a/a64e7a1a2f6cce8486838b792d939c87.jpg" class="card-img">
                 </div>
-                <h3>Jumbo Rosé 💖</h3>
-                <p>70k</p>
+                <h3 style="margin-top:20px; font-family: 'Fredoka';">Jumbo Rosé 💖</h3>
+                <div class="price-tag">70k</div>
             </div>
         </div>
 
         <section class="social-section">
-            <h3 class="social-title">Order your magic here! 🎀 ✨</h3>
-            <div class="social-icons">
-                <a href="https://www.instagram.com/leonardrapiki/" class="social-btn">Instagram</a>
-                <a href="https://www.tiktok.com/@leonard2pac" class="social-btn">TikTok</a>
-                <a href="https://wa.me/6282231235341" class="social-btn">WhatsApp</a>
+            <h2 style="font-family: 'Fredoka'; color: var(--cute-pink); font-size: 2rem;">Mau Pesan? Hubungi Kami! ✨</h2>
+            <div class="social-links">
+                <a href="https://www.instagram.com/leonardrapiki/" class="social-btn" target="_blank">
+                    <span>📸</span> INSTAGRAM
+                </a>
+                <a href="https://www.tiktok.com/@leonard2pac" class="social-btn" target="_blank">
+                    <span>🎵</span> TIKTOK
+                </a>
+                <a href="https://wa.me/6282231235341" class="social-btn" target="_blank">
+                    <span>💬</span> WHATSAPP
+                </a>
             </div>
         </section>
 
         <footer>
-            MADE WITH LOVE BY RIFKYC &copy; 2026 — STAY BLOOMING!
+            BY RIFKYC &bull; EST 2026 &bull; BLOOM WITH JOY
         </footer>
     </div>
 
+    <script>
+        // 1. Custom Cursor
+        const cursor = document.getElementById('cursor-flower');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // 2. 3D Tilt Kartu (TETAP ADA)
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 8;
+                const rotateY = (centerX - x) / 8;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // 3. Kelopak Jatuh
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.innerHTML = ['🌸','🌷','✨','💖'][Math.floor(Math.random()*4)];
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.top = '-50px';
+            petal.style.fontSize = Math.random() * 20 + 20 + 'px';
+            petal.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 5000);
+        }
+        setInterval(createPetal, 800);
+    </script>
 </body>
 </html>
