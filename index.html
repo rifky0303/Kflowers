@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kflowers Ultra Gemoy 🌸</title>
+    <title>Kflowers Gazette 🌸</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,900;1,900&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,7 +12,7 @@
             --ink: #333;
             --soft-pink: #ffdae0;
             --cute-pink: #ff8fa3;
-            --candy-blue: #bde0fe;
+            --torn-paper: #e8e4d9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,10 +27,8 @@
             font-family: 'Courier Prime', monospace;
             overflow-x: hidden;
             padding: 20px;
-            /* Halaman diam, tidak ada rotasi 3d di body */
         }
 
-        /* Custom Cursor */
         #cursor-flower {
             position: fixed;
             width: 40px;
@@ -43,7 +41,6 @@
         }
         @media (min-width: 1024px) { #cursor-flower { display: block; } }
 
-        /* Container Koran (STATIS/DIAM) */
         .newspaper-container {
             max-width: 1100px;
             margin: 40px auto;
@@ -52,10 +49,8 @@
             position: relative;
             box-shadow: 15px 15px 0px var(--ink);
             border: 3px solid var(--ink);
-            /* Tidak ada transform di sini agar halaman tidak miring */
         }
 
-        /* Header Bergoyang Lucu */
         .gazette-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(3.5rem, 10vw, 7rem);
@@ -78,12 +73,23 @@
             border-top: 3px solid var(--ink);
             border-bottom: 3px solid var(--ink);
             padding: 10px 0;
-            margin: 20px 0 50px;
+            margin: 20px 0 30px;
             font-weight: bold;
             font-size: 0.8rem;
         }
 
-        /* Product Cards (TILT TETAP AKTIF) */
+        .headline-section {
+            text-align: center;
+            margin: 40px -15px;
+            padding: 35px 20px;
+            background-color: var(--torn-paper);
+            clip-path: polygon(
+                0% 8%, 5% 2%, 10% 9%, 15% 3%, 20% 7%, 25% 1%, 30% 10%, 35% 2%, 40% 8%, 45% 3%, 50% 9%, 55% 2%, 60% 7%, 65% 1%, 70% 8%, 75% 3%, 80% 9%, 85% 2%, 90% 7%, 95% 1%, 100% 8%, 
+                100% 92%, 95% 99%, 90% 91%, 85% 98%, 80% 92%, 75% 97%, 70% 90%, 65% 99%, 60% 92%, 55% 98%, 50% 91%, 45% 99%, 40% 92%, 35% 97%, 30% 90%, 25% 99%, 20% 92%, 15% 98%, 10% 91%, 5% 100%, 0% 92%
+            );
+            position: relative;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -95,13 +101,21 @@
             padding: 20px;
             position: relative;
             border: 3px solid var(--ink);
-            transform-style: preserve-3d;
             cursor: pointer;
-            transition: box-shadow 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: top center;
+            box-shadow: 5px 5px 0px var(--ink);
         }
 
         .card:hover {
-            box-shadow: 10px 10px 0px var(--cute-pink);
+            transform: translateY(-8px) rotate(2deg) skewX(-2deg);
+            box-shadow: 15px 15px 0px var(--cute-pink);
+            animation: fluttering 2.5s ease-in-out infinite;
+        }
+
+        @keyframes fluttering {
+            0%, 100% { transform: translateY(-8px) rotate(2deg) skewX(-2deg); }
+            50% { transform: translateY(-12px) rotate(-1deg) skewX(1deg); }
         }
 
         .image-box {
@@ -115,10 +129,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
         }
 
-        .card:hover .card-img { transform: scale(1.1); }
+        .card-desc {
+            font-size: 0.85rem;
+            margin-top: 12px;
+            line-height: 1.5;
+            color: #444;
+            border-top: 1px dashed #bbb;
+            padding-top: 10px;
+        }
 
         .price-tag {
             font-family: 'Fredoka', sans-serif;
@@ -133,79 +153,59 @@
             font-weight: 600;
         }
 
-        /* --- ANIMASI SOSIAL MEDIA (JELLY MODE) --- */
+        /* Kontak Section */
         .social-section {
-            margin-top: 80px;
-            text-align: center;
-            padding: 40px;
+            border: 3px solid var(--ink);
             background: #fff;
-            border: 3px dashed var(--cute-pink);
-            border-radius: 20px;
+            padding: 30px;
+            margin-top: 60px;
+            position: relative;
         }
 
         .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .social-btn {
-            position: relative;
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 18px 35px;
+            padding: 15px;
             text-decoration: none;
             color: var(--ink);
             font-family: 'Fredoka', sans-serif;
             font-weight: 600;
-            font-size: 1.1rem;
             background: white;
-            border: 3px solid var(--ink);
-            border-radius: 50px;
-            box-shadow: 0 8px 0 var(--ink);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            transition: 0.2s;
         }
 
-        /* Efek Jelly saat di-hover */
+        .social-btn i {
+            font-size: 1.2rem;
+            width: 30px;
+            margin-right: 10px;
+            border-right: 1px solid #333;
+            padding-right: 10px;
+        }
+
         .social-btn:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--cute-pink);
             background: var(--soft-pink);
-            box-shadow: 0 12px 0 var(--cute-pink);
         }
 
-        .social-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 var(--ink);
-        }
-
-        .social-btn span {
-            display: inline-block;
-            transition: transform 0.4s ease;
-        }
-
-        .social-btn:hover span {
-            transform: rotate(360deg);
-        }
-
-        /* Floating Decorations */
         .petal {
             position: fixed;
             pointer-events: none;
             z-index: 100;
             animation: fall linear infinite;
         }
+
         @keyframes fall {
             to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        footer {
-            margin-top: 50px;
-            text-align: center;
-            font-weight: bold;
-            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -223,87 +223,92 @@
             </div>
         </header>
 
+        <div class="headline-section">
+            <p style="text-align:center; font-weight:bold; letter-spacing:3px;">— SPECIAL EDITION —</p>
+            <h2 style="text-align:center; font-family:'Playfair Display'; text-transform:uppercase; font-size:2rem;">Single Stem Collection</h2>
+            <p style="text-align:center; font-size:0.7rem;">HARGA PER TANGKAI • BUKAN BUKET • HAND-KNITTED</p>
+        </div>
+
         <div class="grid">
             <div class="card">
-                <div class="image-box">
-                    <img src="https://i.pinimg.com/736x/74/58/dc/7458dce8dbb934ed0969df4f74d484fe.jpg" class="card-img">
-                </div>
-                <h3 style="margin-top:20px; font-family: 'Fredoka';">Rosé Bliss 🎀</h3>
+                <div class="image-box"><img src="https://i.pinimg.com/736x/74/58/dc/7458dce8dbb934ed0969df4f74d484fe.jpg" class="card-img"></div>
+                <h3 style="margin-top:20px; font-family:'Fredoka';">Rosé Bliss 🎀</h3>
+                <p class="card-desc">Satu tangkai mawar merah elegan hasil rajutan tangan.</p>
                 <div class="price-tag">34k</div>
             </div>
-
             <div class="card">
-                <div class="image-box">
-                    <img src="https://i.pinimg.com/1200x/ba/82/e8/ba82e8730f14db0aea193528da55977d.jpg" class="card-img">
-                </div>
-                <h3 style="margin-top:20px; font-family: 'Fredoka';">Sweet Lily ☁️</h3>
+                <div class="image-box"><img src="https://i.pinimg.com/1200x/ba/82/e8/ba82e8730f14db0aea193528da55977d.jpg" class="card-img"></div>
+                <h3 style="margin-top:20px; font-family:'Fredoka';">Sweet Lily ☁️</h3>
+                <p class="card-desc">Keanggunan lily putih per tangkai yang sangat kalem.</p>
                 <div class="price-tag">16k</div>
             </div>
-
             <div class="card">
-                <div class="image-box">
-                    <img src="https://i.pinimg.com/736x/fc/3d/fa/fc3dfa0506512896c7b727c1005f2fa8.jpg" class="card-img">
-                </div>
-                <h3 style="margin-top:20px; font-family: 'Fredoka';">Tulip Clean 🌷</h3>
+                <div class="image-box"><img src="https://i.pinimg.com/736x/fc/3d/fa/fc3dfa0506512896c7b727c1005f2fa8.jpg" class="card-img"></div>
+                <h3 style="margin-top:20px; font-family:'Fredoka';">Tulip Clean 🌷</h3>
+                <p class="card-desc">Satu tangkai tulip minimalis untuk pelengkap kado manis.</p>
                 <div class="price-tag">16k</div>
             </div>
-
             <div class="card">
-                <div class="image-box">
-                    <img src="https://i.pinimg.com/736x/a6/4e/7a/a64e7a1a2f6cce8486838b792d939c87.jpg" class="card-img">
-                </div>
-                <h3 style="margin-top:20px; font-family: 'Fredoka';">Jumbo Rosé 💖</h3>
+                <div class="image-box"><img src="https://i.pinimg.com/736x/a6/4e/7a/a64e7a1a2f6cce8486838b792d939c87.jpg" class="card-img"></div>
+                <h3 style="margin-top:20px; font-family:'Fredoka';">Jumbo Rosé 💖</h3>
+                <p class="card-desc">Mawar rajut ukuran jumbo untuk momen yang lebih berani.</p>
                 <div class="price-tag">70k</div>
+            </div>
+            <div class="card">
+                <div class="image-box"><img src="https://i.pinimg.com/736x/80/58/8e/80588ec04ac3b6f0e4039bce451546a1.jpg" class="card-img"></div>
+                <h3 style="margin-top:20px; font-family:'Fredoka';">Lily Pot ☁️</h3>
+                <p class="card-desc">Bunga Lily mungil lengkap dengan pot rajut dekoratif.</p>
+                <div class="price-tag">Soon</div>
+            </div>
+            <div class="card">
+                <div class="image-box"><img src="https://i.pinimg.com/1200x/92/67/f5/9267f586f76b4d3e930b9eab5238d94e.jpg" class="card-img"></div>
+                <h3 style="margin-top:20px; font-family:'Fredoka';">Sunflower Pot 🌻</h3>
+                <p class="card-desc">Bunga matahari ceria dalam pot rajutan. Segera hadir!</p>
+                <div class="price-tag">Soon</div>
             </div>
         </div>
 
         <section class="social-section">
-            <h2 style="font-family: 'Fredoka'; color: var(--cute-pink); font-size: 2rem;">Mau Pesan? Hubungi Kami! ✨</h2>
-            <div class="social-links">
-                <a href="https://www.instagram.com/leonardrapiki/" class="social-btn" target="_blank">
-                    <span>📸</span> INSTAGRAM
-                </a>
-                <a href="https://www.tiktok.com/@leonard2pac" class="social-btn" target="_blank">
-                    <span>🎵</span> TIKTOK
-                </a>
-                <a href="https://wa.me/6282231235341" class="social-btn" target="_blank">
-                    <span>💬</span> WHATSAPP
-                </a>
+            <div style="border: 1px solid var(--ink); padding: 20px;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; text-transform: uppercase; border-bottom: 2px solid var(--ink); display: inline-block;">
+                    Classified Ads: Contact Editor
+                </h2>
+                <p style="font-size: 0.8rem; margin: 15px 0; font-style: italic;">
+                    "Tertarik memesan? Hubungi redaksi kami melalui jalur di bawah ini."
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://www.instagram.com/leonardrapiki/" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-instagram"></i> @leonardrapiki
+                    </a>
+                    <a href="https://www.tiktok.com/@leonard2pac" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-tiktok"></i> @leonard2pac
+                    </a>
+                    <a href="https://wa.me/6282231235341" target="_blank" class="social-btn">
+                        <i class="fa-brands fa-whatsapp"></i> +62 822-3123-5341
+                    </a>
+                </div>
+            </div>
+            <div style="position: absolute; top: -15px; right: 20px; background: #ffdae0; border: 2px double #ff8fa3; color: #ff8fa3; padding: 10px; transform: rotate(12deg); font-weight: bold; font-family: 'Courier Prime'; pointer-events: none; z-index: 5;">
+                ORDER NOW!
             </div>
         </section>
 
-        <footer>
-            BY RIFKYC &bull; EST 2026 &bull; BLOOM WITH JOY
+        <footer style="margin-top: 50px; text-align: center; border-top: 4px double var(--ink); padding-top: 20px;">
+            <p style="font-weight: bold; letter-spacing: 3px; font-size: 0.8rem;">KFLOWERS GAZETTE &bull; CANGKUANG &bull; 2026</p>
+            <p style="font-size: 0.6rem; margin-top: 5px;">ALL FLOWERS ARE HAND-KNITTED PER STEM</p>
         </footer>
     </div>
 
     <script>
-        // 1. Custom Cursor
+        // Custom Cursor
         const cursor = document.getElementById('cursor-flower');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // 2. 3D Tilt Kartu (TETAP ADA)
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 8;
-                const rotateY = (centerX - x) / 8;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            });
-        });
-
-        // 3. Kelopak Jatuh
+        // Efek Kelopak Jatuh
         function createPetal() {
             const petal = document.createElement('div');
             petal.innerHTML = ['🌸','🌷','✨','💖'][Math.floor(Math.random()*4)];
