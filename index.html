@@ -92,7 +92,7 @@
             position: relative;
         }
 
-        /* Grid Produk (Kibas 2D) */
+        /* Card System (Kibas 2D) */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -104,7 +104,6 @@
             padding: 20px;
             position: relative;
             border: 3px solid var(--ink);
-            cursor: pointer;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             transform-origin: top center;
             box-shadow: 5px 5px 0px var(--ink);
@@ -143,6 +142,7 @@
             padding-top: 10px;
         }
 
+        /* Price Tag - Hanya ini yang bisa diklik */
         .price-tag {
             font-family: 'Fredoka', sans-serif;
             background: #ffecb3;
@@ -154,7 +154,9 @@
             right: -10px;
             transform: rotate(5deg);
             font-weight: 600;
+            cursor: pointer;
             transition: 0.2s;
+            z-index: 10;
         }
 
         .price-tag:hover {
@@ -163,7 +165,7 @@
             color: white;
         }
 
-        /* Modal Popup */
+        /* Modal Popup Design */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -200,7 +202,7 @@
             color: var(--ink);
         }
 
-        /* Iklan Baris Buttons */
+        /* Tombol Iklan Baris */
         .social-btn {
             display: flex;
             align-items: center;
@@ -231,6 +233,7 @@
             background: var(--soft-pink);
         }
 
+        /* Section Kontak Bawah */
         .social-section {
             border: 3px solid var(--ink);
             background: #fff;
@@ -256,9 +259,12 @@
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
             <div style="border: 2px solid var(--ink); padding: 20px; text-align: center;">
-                <h2 style="font-family: 'Playfair Display'; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;">Special Bulletin</h2>
-                <p id="modalItemName" style="font-weight: bold; font-size: 1.3rem; color: var(--cute-pink); margin-bottom: 5px;"></p>
-                <p style="font-size: 0.8rem; font-style: italic; margin-bottom: 25px;">"Pesan sekarang melalui jalur komunikasi kami:"</p>
+                <h2 style="font-family: 'Playfair Display'; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;">Bulletin: Order</h2>
+                
+                <p id="modalItemName" style="font-weight: bold; font-size: 1.3rem; color: var(--cute-pink); margin-top: 15px;"></p>
+                <p id="modalItemDesc" style="font-size: 0.9rem; font-family: 'Courier Prime'; line-height: 1.4; margin: 10px 0 25px; border-bottom: 1px dashed #ccc; padding-bottom: 15px;"></p>
+                
+                <p style="font-size: 0.75rem; font-style: italic; margin-bottom: 20px;">"Pesan melalui redaksi kami:"</p>
                 
                 <div style="text-align: left;">
                     <a href="https://wa.me/6282231235341" target="_blank" class="social-btn">
@@ -288,45 +294,45 @@
         <div class="headline-section">
             <p style="text-align:center; font-weight:bold; letter-spacing:3px;">— SPECIAL EDITION —</p>
             <h2 style="text-align:center; font-family:'Playfair Display'; text-transform:uppercase; font-size:2rem;">Single Stem Collection</h2>
-            <p style="text-align:center; font-size:0.7rem;">HARGA PER TANGKAI • KLIK UNTUK MEMESAN</p>
+            <p style="text-align:center; font-size:0.7rem;">HARGA PER TANGKAI • KLIK HARGA UNTUK MEMESAN</p>
         </div>
 
         <div class="grid">
-            <div class="card" onclick="openModal('Rosé Bliss 🎀')">
+            <div class="card">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/74/58/dc/7458dce8dbb934ed0969df4f74d484fe.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Rosé Bliss 🎀</h3>
                 <p class="card-desc">Satu tangkai mawar merah elegan hasil rajutan tangan.</p>
-                <div class="price-tag">34k</div>
+                <div class="price-tag" onclick="openModal('Rosé Bliss 🎀', 'Satu tangkai mawar merah elegan hasil rajutan tangan.')">34k</div>
             </div>
-            <div class="card" onclick="openModal('Sweet Lily ☁️')">
+            <div class="card">
                 <div class="image-box"><img src="https://i.pinimg.com/1200x/ba/82/e8/ba82e8730f14db0aea193528da55977d.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Sweet Lily ☁️</h3>
                 <p class="card-desc">Keanggunan lily putih per tangkai yang sangat kalem.</p>
-                <div class="price-tag">16k</div>
+                <div class="price-tag" onclick="openModal('Sweet Lily ☁️', 'Keanggunan lily putih per tangkai yang sangat kalem.')">16k</div>
             </div>
-            <div class="card" onclick="openModal('Tulip Clean 🌷')">
+            <div class="card">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/fc/3d/fa/fc3dfa0506512896c7b727c1005f2fa8.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Tulip Clean 🌷</h3>
                 <p class="card-desc">Satu tangkai tulip minimalis untuk pelengkap kado manis.</p>
-                <div class="price-tag">16k</div>
+                <div class="price-tag" onclick="openModal('Tulip Clean 🌷', 'Satu tangkai tulip minimalis untuk pelengkap kado manis.')">16k</div>
             </div>
-            <div class="card" onclick="openModal('Jumbo Rosé 💖')">
+            <div class="card">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/a6/4e/7a/a64e7a1a2f6cce8486838b792d939c87.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Jumbo Rosé 💖</h3>
                 <p class="card-desc">Mawar rajut ukuran jumbo untuk momen yang lebih berani.</p>
-                <div class="price-tag">70k</div>
+                <div class="price-tag" onclick="openModal('Jumbo Rosé 💖', 'Mawar rajut ukuran jumbo untuk momen yang lebih berani.')">70k</div>
             </div>
-            <div class="card" onclick="openModal('Lily Pot ☁️')">
+            <div class="card">
                 <div class="image-box"><img src="https://i.pinimg.com/736x/80/58/8e/80588ec04ac3b6f0e4039bce451546a1.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Lily Pot ☁️</h3>
                 <p class="card-desc">Bunga Lily mungil lengkap dengan pot rajut dekoratif.</p>
-                <div class="price-tag">Soon</div>
+                <div class="price-tag" onclick="openModal('Lily Pot ☁️', 'Bunga Lily mungil lengkap dengan pot rajut dekoratif.')">Soon</div>
             </div>
-            <div class="card" onclick="openModal('Sunflower Pot 🌻')">
+            <div class="card">
                 <div class="image-box"><img src="https://i.pinimg.com/1200x/92/67/f5/9267f586f76b4d3e930b9eab5238d94e.jpg" class="card-img"></div>
                 <h3 style="margin-top:20px; font-family:'Fredoka';">Sunflower Pot 🌻</h3>
                 <p class="card-desc">Bunga matahari ceria dalam pot rajutan. Segera hadir!</p>
-                <div class="price-tag">Soon</div>
+                <div class="price-tag" onclick="openModal('Sunflower Pot 🌻', 'Bunga matahari ceria dalam pot rajutan. Segera hadir!')">Soon</div>
             </div>
         </div>
 
@@ -357,24 +363,26 @@
         // Modal Logic
         const modal = document.getElementById('orderModal');
         const modalItemName = document.getElementById('modalItemName');
+        const modalItemDesc = document.getElementById('modalItemDesc');
         const closeModal = document.getElementById('closeModal');
 
-        function openModal(name) {
+        function openModal(name, desc) {
             modalItemName.innerText = name;
+            modalItemDesc.innerText = desc;
             modal.style.display = 'flex';
         }
 
         closeModal.onclick = () => modal.style.display = 'none';
         window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; }
 
-        // Cursor
+        // Custom Cursor
         const cursor = document.getElementById('cursor-flower');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Petals
+        // Petals Effect
         function createPetal() {
             const petal = document.createElement('div');
             petal.innerHTML = ['🌸','🌷','✨','💖'][Math.floor(Math.random()*4)];
